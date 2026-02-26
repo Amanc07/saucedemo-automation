@@ -17,6 +17,7 @@ export class CheckoutPage extends BasePage {
       this.finishButton=page.getByTestId('finish');
       this.orderCompletePage=page.getByTestId('checkout-complete-container');
       this.orderCompleteText=page.getByTestId('complete-header');
+      this.formErrorMessage=page.getByTestId('error');
     }
 
     async fillCheckoutInformation(firstName, lastName, postalCode){
@@ -50,7 +51,9 @@ export class CheckoutPage extends BasePage {
     async verifyCheckoutComplete(orderCompleteText){
         await expect(this.orderCompletePage).toBeVisible();
         await expect(this.orderCompleteText).toHaveText(orderCompleteText);
-
+    }
+    async verifyFormErrorMessage(expectedMessage){
+        await expect(this.formErrorMessage).toHaveText(expectedMessage);
     }
 
 

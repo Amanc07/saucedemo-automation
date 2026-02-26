@@ -7,7 +7,7 @@ import { constants } from '../../utils/constants';
 import { CartPage } from '../../pages/CartPage';
 
 test.describe('E2E product purchase', () => {
-    test.only('checkout product', async ({ page }) => {
+    test('checkout product', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const checkoutPage = new CheckoutPage(page);
         const inventoryPage = new InventoryPage(page);
@@ -28,5 +28,24 @@ test.describe('E2E product purchase', () => {
         await checkoutPage.verifyTotalMatchesCalculatedTotal(); 
         await checkoutPage.clickFinish();
         await checkoutPage.verifyCheckoutComplete(Messages.OrderComplete.ORDER_COMPLETE_TEXT);
-    })
+    });
+    test('checkout product with missing information', async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        const checkoutPage = new CheckoutPage(page);
+        const inventoryPage = new InventoryPage(page);
+        const cartPage = new CartPage(page);
+        await loginPage.goto();
+        await loginPage.login(process.env.STANDARD_USER, process.env.PASSWORD);
+        await loginPage.verifyLoginSuccess();
+        await inventoryPage.addProductToCart(constants.PRODUCT_NAME);
+        await inventoryPage.verifyProductAddedToCart(constants.PRODUCT_NAME);
+        await inventoryPage.goToCart();
+        await cartPage.verifyCartPage();
+        await cartPage.clickCheckout();
+        await checkoutPage.verifyCheckoutInformationPage();
+        await checkoutPage.fillCheckoutInformation(constants.FIRST_NAME, '', constants.POSTAL_CODE);
+        await checkoutPage.clickContinue();
+        await checkoutPage.verifyFormErrorMessage(Messages.CheckoutInformation.FORM_ERROR_MESSAGE);
+    });
+
 });
