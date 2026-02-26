@@ -3,7 +3,7 @@ import { LoginPage } from '../../pages/LoginPage';
 import { InventoryPage } from '../../pages/InventoryPage';
 import { CheckoutPage } from '../../pages/CheckoutPage';
 import { Messages } from '../../utils/Messages';
-import { constants } from '../../utils/constants';
+import { constants } from '../../utils/Constants';
 import { CartPage } from '../../pages/CartPage';
 
 test.describe('checkout workflow', () => {
