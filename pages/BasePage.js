@@ -10,5 +10,9 @@ export class BasePage {
   async waitForPageLoad() {
     await this.page.waitForLoadState('networkidle');
   }
+  async numericValue(locator){
+        const text = await locator.textContent();
+        return parseFloat(text.replace(/[^0-9.]+/g, ''));
+    }
 
 }
