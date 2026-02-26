@@ -8,6 +8,7 @@ export class LoginPage extends BasePage {
     this.passwordInput = page.getByTestId('password');
     this.loginButton = page.getByTestId('login-button');
     this.inventoryList = page.getByTestId('inventory-container');
+    this.errorMessage = page.getByTestId('error');
   }
   async login(username, password) {
     await this.usernameInput.fill(username);
@@ -16,5 +17,9 @@ export class LoginPage extends BasePage {
   }
     async verifyLoginSuccess() {
     await expect(this.inventoryList).toBeVisible();
+  }
+  async verifyLoginFailure(message) {
+    await expect(this.errorMessage).toBeVisible();
+    await expect(this.errorMessage).toHaveText(message);
   }
 }
