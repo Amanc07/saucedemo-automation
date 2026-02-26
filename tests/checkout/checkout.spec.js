@@ -6,7 +6,7 @@ import { Messages } from '../../utils/Messages';
 import { constants } from '../../utils/constants';
 import { CartPage } from '../../pages/CartPage';
 
-test.describe('E2E product purchase', () => {
+test.describe('checkout workflow', () => {
     test('checkout product', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const checkoutPage = new CheckoutPage(page);
@@ -29,7 +29,7 @@ test.describe('E2E product purchase', () => {
         await checkoutPage.clickFinish();
         await checkoutPage.verifyCheckoutComplete(Messages.OrderComplete.ORDER_COMPLETE_TEXT);
     });
-    test('checkout product with missing information', async ({ page }) => {
+    test('shows an error if last name is missing', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const checkoutPage = new CheckoutPage(page);
         const inventoryPage = new InventoryPage(page);
